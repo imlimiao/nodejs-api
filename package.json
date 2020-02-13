@@ -1,0 +1,23 @@
+{
+    "name": "nodejs-api",
+    "version": "1.0.0",
+    "description": "\"nodejs-api\"",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon nodejs-API/url/url.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/imlimiao/nodejs-api.git"
+    },
+    "author": "limiao04",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/imlimiao/nodejs-api/issues"
+    },
+    "homepage": "https://github.com/imlimiao/nodejs-api#readme",
+    "devDependencies": {
+        "nodemon": "^2.0.2"
+    }
+}
