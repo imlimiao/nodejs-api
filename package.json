@@ -19,5 +19,8 @@
     "homepage": "https://github.com/imlimiao/nodejs-api#readme",
     "devDependencies": {
         "nodemon": "^2.0.2"
+    },
+    "dependencies": {
+        "silly-datetime": "^0.1.2"
     }
 }
