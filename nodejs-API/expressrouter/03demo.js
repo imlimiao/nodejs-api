@@ -8,7 +8,6 @@ var http = require('http');
 var server = http.createServer(app);
 
 app.get('/', function (req, res) {
-
     res.send('首页');
 });
 app.get('/login', function (req, res) {

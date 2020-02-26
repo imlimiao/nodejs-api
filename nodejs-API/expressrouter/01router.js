@@ -1,91 +1,88 @@
-
 //引入http模块
-var http=require('http');
+var http = require('http');
 
-var url=require('url');
+var url = require('url');
 
-var ejs=require('ejs');
+var ejs = require('ejs');
 
-var fs=require('fs');
+var fs = require('fs');
 
 //路由:指的就是针对不同请求的 URL，处理不同的业务逻辑。
-http.createServer(function(req,res){
+http.createServer(function(req, res) {
 
-	res.writeHead(200,{"Content-Type":"text/html;charset='utf-8'"});
-
-
-	//获取get 还是post请求
+    res.writeHead(200, { "Content-Type": "text/html;charset='utf-8'" });
 
 
-	var method=req.method.toLowerCase();
-	//console.log(method);
-
-	var pathname=url.parse(req.url,true).pathname;
+    //获取get 还是post请求
 
 
-	if(pathname=='/login'){  /*显示登录页面*/
+    var method = req.method.toLowerCase();
+    //console.log(method);
+
+    var pathname = url.parse(req.url, true).pathname;
 
 
-		ejs.renderFile('views/form.ejs',{
+    if (pathname == '/login') {
+        /*显示登录页面*/
 
-		},function(err,data){
+        ejs.renderFile('views/form.ejs', {
 
-
-			res.end(data);
-
-		})
+        }, function(err, data) {
 
 
-	}else if(pathname=='/dologin' &&method=='get'){  /*执行登录的操作*/
+            res.end(data);
+
+        })
 
 
-		//get获取数据
-		console.log(url.parse(req.url,true).query);
-
-		res.end('dologin');
+    } else if (pathname == '/dologin' && method == 'get') {
+        /*执行登录的操作*/
 
 
+        //get获取数据
+        console.log(url.parse(req.url, true).query);
 
-	}else if(pathname=='/dologin' &&method=='post'){  /*执行登录的操作*/
-
-
-		var postStr='';
-		req.on('data',function(chunk){
-
-			postStr+=chunk;
-		})
-		req.on('end',function(err,chunk){
-
-			//res.end(postStr);
-			console.log(postStr);
-
-			fs.appendFile('login.txt',postStr+'\n',function(err){
-
-				if(err){
-					console.log(err);
-					return;
-				}
-				console.log('写入数据成功');
-			})
-
-			res.end("<script>alert('登录成功');history.back();</script>")
-
-		})
+        res.end('dologin');
 
 
-	}else{
 
-		ejs.renderFile('views/index.ejs',{
+    } else if (pathname == '/dologin' && method == 'post') {
+        /*执行登录的操作*/
 
-		},function(err,data){
 
-			res.end(data);
+        var postStr = '';
+        req.on('data', function(chunk) {
+            console.log(chunk.toString(), "chunk----");
+            postStr += chunk;
+        })
+        req.on('end', function(err, chunk) {
+            //res.end(postStr);
+            console.log(postStr);
 
-		})
-	}
+            fs.writeFile('login.txt', postStr + '\n', function(err) {
+
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log('写入数据成功');
+            })
+
+            res.end("<script>alert('登录成功');</script>")
+
+        })
+
+
+    } else {
+        console.log("首页");
+
+        ejs.renderFile('views/index.ejs', {
+            msg: '小神兽--又在玩耍',
+        }, function(err, data) {
+
+            res.end(data);
+
+        })
+    }
 
 }).listen(8001);
-
-
-
-
